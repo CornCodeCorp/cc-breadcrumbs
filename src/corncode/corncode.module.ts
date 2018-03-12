@@ -6,7 +6,7 @@ import {CornCodeComponent} from './corncode.component';
 import {CCBreadcrumbsComponent} from './components/cc-breadcrumbs/cc-breadcrumbs.component';
 
 @NgModule({
-    imports: [,
+    imports: [
         RouterModule,
         BrowserModule
     ],
