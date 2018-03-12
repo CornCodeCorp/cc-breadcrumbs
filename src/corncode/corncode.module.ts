@@ -7,7 +7,9 @@ import {CCBreadcrumbsComponent} from './components/cc-breadcrumbs/cc-breadcrumbs
 
 @NgModule({
     imports: [
-        RouterModule,
+        RouterModule.forRoot([
+            {path: '', component: CornCodeComponent}
+        ]),
         BrowserModule
     ],
     declarations: [
