@@ -1,16 +1,18 @@
 import {BrowserModule} from '@angular/platform-browser';
+import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
 
 import {CornCodeComponent} from './corncode.component';
 import {CCBreadcrumbsComponent} from './components/cc-breadcrumbs/cc-breadcrumbs.component';
 
 @NgModule({
+    imports: [,
+        RouterModule,
+        BrowserModule
+    ],
     declarations: [
         CornCodeComponent,
         CCBreadcrumbsComponent
-    ],
-    imports: [
-        BrowserModule
     ],
     exports: [
         CCBreadcrumbsComponent
