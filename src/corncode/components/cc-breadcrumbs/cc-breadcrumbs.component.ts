@@ -5,7 +5,7 @@ import {Component, OnInit} from '@angular/core';
     templateUrl: './cc-breadcrumbs.component.html',
     styleUrls: ['./cc-breadcrumbs.component.css']
 })
-export class CcBreadcrumbsComponent implements OnInit {
+export class CCBreadcrumbsComponent implements OnInit {
 
     constructor() {
     }

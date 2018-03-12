@@ -1,1 +1,1 @@
-export * from './src/app/modules/corncode/corncode.module';
+export * from './src/corncode/corncode.module';
