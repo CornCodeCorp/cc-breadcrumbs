@@ -1,6 +1,6 @@
 {
   "name": "cc-breadcrumbs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "description": "Breadcrumbs library for Angular 4 applications",
   "scripts": {
@@ -14,7 +14,6 @@
   },
   "private": false,
   "dependencies": {
-    "@angular/animations": "^4.4.6",
     "@angular/common": "^4.4.6",
     "@angular/compiler": "^4.4.6",
     "@angular/core": "^4.4.6",
