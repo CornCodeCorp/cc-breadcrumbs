@@ -1,3 +1,12 @@
-<p>
-  cc-breadcrumbs works!
-</p>
+<ol class="cc-breadcrumb">
+    <li
+        class="cc-breadcrumb__item"
+        *ngFor="let breadcrumb of breadcrumbs; trackBy: trackByFn">
+        <a
+            class="cc-breadcrumb__item__link"
+            title="{{breadcrumb.label}}"
+            [routerLink]="[breadcrumb.url]">
+            {{breadcrumb.label}}
+        </a>
+    </li>
+</ol>
