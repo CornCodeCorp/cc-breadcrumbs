@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Params, PRIMARY_OUTLET, Router} from '@angular/router';
 
-interface IBreadcrumb {
+export interface IBreadcrumb {
     label: string;
     params?: Params;
     url: string;
