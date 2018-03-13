@@ -61,26 +61,16 @@ export class CCBreadcrumbsComponent implements OnInit {
                 const parent = child.snapshot.data[ROUTE_DATA_BREADCRUMB].parent;
                 let label, url;
 
-                if (Object.prototype.toString.call(parent) === '[object Array]') {
+                if (isArray(parent)) {
                     url = '/' + parent.join('/').replace(/\:((\w+)Id)/, (a, b, c) => {
                         label = child.snapshot.data[c].displayName;
                         return child.snapshot.params[b];
                     });
 
-                    let a = this.router.config.find((config) => {
-                        return parent[0] === config.path;
-                    });
+                    const p = this.findParent(parent);
 
-                    if (a.data && a.data.breadcrumbs) {
-                        if (a.data.breadcrumbs.parent) {
-                            let b = this.router.config.find((config) => {
-                                return a.data.breadcrumbs.parent === config.path;
-                            });
-                            breadcrumbs.unshift({
-                                label: b.data.breadcrumbs.label,
-                                url: '/' + b.path
-                            });
-                        }
+                    if (p) {
+                        breadcrumbs.unshift(p);
                     }
 
                 } else {
@@ -113,8 +103,37 @@ export class CCBreadcrumbsComponent implements OnInit {
         return breadcrumbs;
     }
 
+    private findParent(parent) {
+
+        let a = this.router.config.find((config) => {
+            return config.path === parent[0];
+        });
+
+        if (a.data && a.data.breadcrumbs) {
+            if (a.data.breadcrumbs.parent) {
+                let b = this.router.config.find((config) => {
+                    return config.path === a.data.breadcrumbs.parent;
+                });
+
+                if (isArray(b.data.breadcrumbs.parent)) {
+                    return this.findParent(b.data.breadcrumbs.parent);
+                }
+
+                return {
+                    label: b.data.breadcrumbs.label,
+                    url: '/' + b.path
+                };
+            }
+        }
+
+    }
+
     public trackByFn(index, item) {
         return item.path;
     }
 
+}
+
+function isArray(value) {
+    return Object.prototype.toString.call(value) === '[object Array]';
 }
