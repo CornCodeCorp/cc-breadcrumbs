@@ -1,4 +1,4 @@
-.cc-breadcrumb {
+.cc-breadcrumbs {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -7,28 +7,28 @@
     display: flex;
 }
 
-.cc-breadcrumb__item {
+.cc-breadcrumbs__item {
     text-overflow: ellipsis;
     overflow: hidden;
     margin-left: 6px;
     color: #fff;
 }
 
-.cc-breadcrumb__link {
+.cc-breadcrumbs__item__link {
     color: #fff;
     font-size: 14px;
 }
 
-.cc-breadcrumb__link:hover {
+.cc-breadcrumbs__item__link:hover {
     color: #fff;
 }
 
-.cc-breadcrumb__item:first-child {
+.cc-breadcrumbs__item:first-child {
     overflow: visible;
     margin-left: 0;
 }
 
-.cc-breadcrumb__item:before {
+.cc-breadcrumbs__item + li:before {
     content: "\203A";
     padding: 0;
     display: block;

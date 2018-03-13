@@ -1,6 +1,6 @@
 {
   "name": "cc-breadcrumbs",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "license": "MIT",
   "description": "Breadcrumbs library for Angular 4 applications",
   "scripts": {
