@@ -42,7 +42,7 @@ export class CCBreadcrumbsComponent implements OnInit {
                 continue;
             }
 
-            if (!child.routeConfig.data.hasOwnProperty(ROUTE_DATA_BREADCRUMB)) {
+            if (!child.routeConfig.data || !child.routeConfig.data.hasOwnProperty(ROUTE_DATA_BREADCRUMB)) {
                 return this.getBreadcrumbs(child, url, breadcrumbs);
             }
 
