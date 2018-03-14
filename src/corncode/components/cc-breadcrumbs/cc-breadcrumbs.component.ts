@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {ActivatedRoute, Params, PRIMARY_OUTLET, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Params, PRIMARY_OUTLET, Router} from '@angular/router';
 
 export interface IBreadcrumb {
     label: string;
@@ -16,6 +16,7 @@ export interface IBreadcrumb {
 export class CCBreadcrumbsComponent implements OnInit {
 
     public breadcrumbs: IBreadcrumb[];
+    private paramKeyRegExp: RegExp = /:((\w+)Id)/g;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private router: Router) {
@@ -23,8 +24,13 @@ export class CCBreadcrumbsComponent implements OnInit {
     }
 
     ngOnInit() {
-        let root: ActivatedRoute = this.activatedRoute.root;
-        this.breadcrumbs = this.getBreadcrumbs(root);
+        this.breadcrumbs = this.getBreadcrumbs(this.activatedRoute.root);
+
+        this.router.events.subscribe(event => {
+            if (event instanceof NavigationEnd) {
+                this.breadcrumbs = this.getBreadcrumbs(this.activatedRoute.root);
+            }
+        });
     }
 
     private getBreadcrumbs(route: ActivatedRoute, url: string = '', breadcrumbs: IBreadcrumb[] = []): IBreadcrumb[] {
@@ -51,41 +57,22 @@ export class CCBreadcrumbsComponent implements OnInit {
             url += `/${routeURL}`;
 
             let label;
+            let resolveParentKey;
+
             if (route.snapshot.data[child.snapshot.data[ROUTE_DATA_BREADCRUMB].label]) {
                 label = route.snapshot.data[child.snapshot.data[ROUTE_DATA_BREADCRUMB].label].displayName;
             } else if (child.snapshot.data[ROUTE_DATA_BREADCRUMB].label) {
-                label = child.snapshot.data[ROUTE_DATA_BREADCRUMB].label;
-            }
 
-            if (child.snapshot.data[ROUTE_DATA_BREADCRUMB].parent) {
-                const parent = child.snapshot.data[ROUTE_DATA_BREADCRUMB].parent;
-                let label, url;
-
-                if (isArray(parent)) {
-                    url = '/' + parent.join('/').replace(/\:((\w+)Id)/, (a, b, c) => {
-                        label = child.snapshot.data[c].displayName;
-                        return child.snapshot.params[b];
-                    });
-
-                    const p = this.findParent(parent);
-
-                    if (p) {
-                        breadcrumbs.unshift(p);
-                    }
-
+                if (child.snapshot.data[ROUTE_DATA_BREADCRUMB].label.split('.').length > 1) {
+                    resolveParentKey = child.snapshot.data[ROUTE_DATA_BREADCRUMB].label.split('.')[0];
+                    label = deep(child.snapshot.data[ROUTE_DATA_BREADCRUMB].label, child.snapshot.data).displayName;
                 } else {
-                    url = '/' + child.snapshot.data[ROUTE_DATA_BREADCRUMB].parent;
-                    label = this.router.config.filter((config) => {
-                        return config.path === parent && config.data && config.data.breadcrumbs;
-                    })[0].data.breadcrumbs.label;
+                    label = child.snapshot.data[ROUTE_DATA_BREADCRUMB].label;
+                    resolveParentKey = label;
                 }
-
-                breadcrumbs.push({
-                    label,
-                    url
-                });
             }
 
+            this.findParent(breadcrumbs, child.snapshot.data[ROUTE_DATA_BREADCRUMB].parent, child.snapshot, resolveParentKey);
 
             if (child.snapshot.data[ROUTE_DATA_BREADCRUMB].label) {
 
@@ -103,29 +90,50 @@ export class CCBreadcrumbsComponent implements OnInit {
         return breadcrumbs;
     }
 
-    private findParent(parent) {
+    private findParent(breadcrumbs, parent, childSnapshot, resolveParentKey?) {
+        let label, url, pathFirstParent;
 
-        let a = this.router.config.find((config) => {
-            return config.path === parent[0];
-        });
-
-        if (a.data && a.data.breadcrumbs) {
-            if (a.data.breadcrumbs.parent) {
-                let b = this.router.config.find((config) => {
-                    return config.path === a.data.breadcrumbs.parent;
-                });
-
-                if (isArray(b.data.breadcrumbs.parent)) {
-                    return this.findParent(b.data.breadcrumbs.parent);
-                }
-
-                return {
-                    label: b.data.breadcrumbs.label,
-                    url: '/' + b.path
-                };
-            }
+        if (!parent) {
+            return;
         }
 
+        if (isArray(parent)) {
+            pathFirstParent = parent[0];
+            parent = '/' + parent.join('/');
+        } else {
+            pathFirstParent = parent;
+            parent = '/' + parent;
+        }
+
+        let newParent = this.router.config.find((config) => {
+            return config.path === pathFirstParent;
+        });
+
+        if (!newParent) {
+            return;
+        }
+
+        url = parent.replace(this.paramKeyRegExp, (pattern, paramKey, resolveKey) => {
+            if (resolveParentKey) {
+                label = childSnapshot.data[resolveParentKey][resolveKey].displayName;
+            } else {
+                label = childSnapshot.data[resolveKey].displayName;
+            }
+            return childSnapshot.params[paramKey];
+        });
+
+        if (!label) {
+            label = newParent.data.breadcrumbs.label;
+        }
+
+        breadcrumbs.unshift({
+            label,
+            url
+        });
+
+        if (newParent.data && newParent.data.breadcrumbs && newParent.data.breadcrumbs.parent) {
+            this.findParent(breadcrumbs, newParent.data.breadcrumbs.parent, childSnapshot);
+        }
     }
 
     public trackByFn(index, item) {
@@ -134,6 +142,21 @@ export class CCBreadcrumbsComponent implements OnInit {
 
 }
 
+/**
+ *
+ * @param key
+ * @param data
+ * @returns {T}
+ */
+function deep(key, data) {
+    return data.breadcrumbs.label.split('.').reduce((pv, cv) => pv[cv], data);
+}
+
+/**
+ * Check if value is Array
+ * @param {any} value
+ * @returns {boolean}
+ */
 function isArray(value) {
     return Object.prototype.toString.call(value) === '[object Array]';
 }

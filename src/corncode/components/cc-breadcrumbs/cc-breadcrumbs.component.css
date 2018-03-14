@@ -20,6 +20,10 @@
 }
 
 .cc-breadcrumbs__item__link:hover {
+    color: #a6a6a6;
+}
+
+.cc-breadcrumbs__item__link:focus {
     color: #fff;
 }
 
