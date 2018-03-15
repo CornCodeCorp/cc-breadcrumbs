@@ -97,7 +97,7 @@ export class CCBreadcrumbsComponent implements OnInit {
             return;
         }
 
-        if (isArray(parent)) {
+        if (Array.isArray(parent)) {
             pathFirstParent = parent[0];
             parent = '/' + parent.join('/');
         } else {
@@ -150,13 +150,4 @@ export class CCBreadcrumbsComponent implements OnInit {
  */
 function deep(key, data) {
     return data.breadcrumbs.label.split('.').reduce((pv, cv) => pv[cv], data);
-}
-
-/**
- * Check if value is Array
- * @param {any} value
- * @returns {boolean}
- */
-function isArray(value) {
-    return Object.prototype.toString.call(value) === '[object Array]';
 }
