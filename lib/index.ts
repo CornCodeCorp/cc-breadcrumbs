@@ -1,8 +1,10 @@
 import {NgModule} from '@angular/core';
+import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
 
-import {CCBreadcrumbsComponent} from '../cc-breadcrumbs/cc-breadcrumbs.component';
-import {RouterModule} from "@angular/router";
+import {CCBreadcrumbsComponent} from './src/cc-breadcrumbs/cc-breadcrumbs.component';
+
+export * from './src/cc-breadcrumbs/cc-breadcrumbs.component';
 
 @NgModule({
     imports: [
