@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
 
-import {CCBreadcrumbsComponent} from './src/breadcrumbs/breadcrumbs.component';
+import {BreadcrumbsComponent} from './src/breadcrumbs/breadcrumbs.component';
 
 export * from './src/breadcrumbs/breadcrumbs.component';
 
@@ -12,10 +12,10 @@ export * from './src/breadcrumbs/breadcrumbs.component';
         RouterModule.forRoot([])
     ],
     declarations: [
-        CCBreadcrumbsComponent
+        BreadcrumbsComponent
     ],
     exports: [
-        CCBreadcrumbsComponent
+        BreadcrumbsComponent
     ]
 })
 export class CornCodeModule {
