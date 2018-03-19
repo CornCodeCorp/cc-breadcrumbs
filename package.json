@@ -1,9 +1,10 @@
 {
   "name": "@corn-code/breadcrumbs",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "license": "MIT",
   "description": "Breadcrumbs library for Angular 4 applications",
   "scripts": {
+    "clean": "rimraf bundles coverage src/**/*.d.ts src/**/*.metadata.json src/**/*.js tests/**/*.d.ts tests/**/*.metadata.json",
     "prepublish": "ngc && npm run build",
     "build": "webpack"
   },
@@ -53,11 +54,16 @@
   "keywords": [
     "breadcrumbs",
     "angular",
-    "cc-breadcrumbs"
+    "corn-code",
+    "breadcrumbs"
   ],
   "bugs": {
     "url": "https://github.com/CornCodeCorp/cc-breadcrumbs/issues"
   },
   "homepage": "https://github.com/CornCodeCorp/cc-breadcrumbs#readme",
-  "author": "Mykola Savenko <biosis21@gmail.com>"
+  "author": "Mykola Savenko <biosis21@gmail.com>",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {}
 }
