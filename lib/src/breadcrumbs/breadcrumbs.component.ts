@@ -9,8 +9,21 @@ export interface IBreadcrumb {
 
 @Component({
     selector: 'cc-breadcrumbs',
-    templateUrl: './cc-breadcrumbs.component.html',
-    styleUrls: ['./cc-breadcrumbs.component.css'],
+    template: `
+        <ol class="cc-breadcrumbs">
+            <li
+                class="cc-breadcrumbs__item"
+                *ngFor="let breadcrumb of breadcrumbs; trackBy: trackByFn">
+                <a
+                    class="cc-breadcrumbs__item__link"
+                    title="{{breadcrumb.label}}"
+                    [routerLink]="[breadcrumb.url]">
+                    {{breadcrumb.label}}
+                </a>
+            </li>
+        </ol>
+    `,
+    styles: ['.cc-breadcrumbs{margin:0;padding:0;list-style:none;background:transparent;white-space:nowrap;display:flex}.cc-breadcrumbs__item{text-overflow:ellipsis;overflow:hidden;margin-left:6px;color:#fff}.cc-breadcrumbs__item__link{color:#fff;font-size:14px}.cc-breadcrumbs__item__link:hover{color:#a6a6a6}.cc-breadcrumbs__item__link:focus{color:#fff}.cc-breadcrumbs__item:first-child{overflow:visible;margin-left:0}.cc-breadcrumbs__item + li:before{content:"\\203A";padding:0;display:block;float:left;font-size:24px;line-height:.8;margin:0 6px 0 0}'],
     encapsulation: ViewEncapsulation.None
 })
 export class CCBreadcrumbsComponent implements OnInit {

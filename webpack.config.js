@@ -34,22 +34,26 @@ module.exports = {
     externals: [/^\@angular\//],
 
     module: {
-        rules: [{
-            enforce: 'pre',
-            test: /\.ts$/,
-            loader: 'tslint-loader',
-            exclude: [helpers.root('node_modules')]
-        }, {
-            test: /\.ts$/,
-            loader: 'awesome-typescript-loader',
-            options: {
-                declaration: false
+        rules: [
+            {
+                enforce: 'pre',
+                test: /\.ts$/,
+                loader: 'tslint-loader',
+                exclude: [helpers.root('node_modules')]
             },
-            exclude: [/\.spec\.ts$/]
-        }]
+            {
+                test: /\.ts$/,
+                loader: 'awesome-typescript-loader',
+                options: {
+                    declaration: false
+                },
+                exclude: [/\.spec\.ts$/]
+            }
+        ]
     },
 
     plugins: [
+
         // fix the warning in ./~/@angular/core/src/linker/system_js_ng_module_factory_loader.js
         new webpack.ContextReplacementPlugin(
             /angular(\\|\/)core(\\|\/)@angular/,

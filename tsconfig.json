@@ -16,7 +16,7 @@
     },
     "files": [
         "./lib/index.ts",
-        "./lib/src/cc-breadcrumbs/cc-breadcrumbs.component.ts"
+        "./lib/src/breadcrumbs/breadcrumbs.component.ts"
     ],
     "exclude": [
         "node_modules",
