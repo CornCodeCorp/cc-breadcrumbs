@@ -20,7 +20,7 @@ module.exports = {
         extensions: ['.ts', '.js']
     },
 
-    entry: helpers.root('./lib/index.ts'),
+    entry: helpers.root('index.ts'),
 
     output: {
         path: helpers.root('bundles'),
@@ -57,7 +57,7 @@ module.exports = {
         // fix the warning in ./~/@angular/core/src/linker/system_js_ng_module_factory_loader.js
         new webpack.ContextReplacementPlugin(
             /angular(\\|\/)core(\\|\/)@angular/,
-            helpers.root('./lib/src')
+            helpers.root('./src')
         ),
 
         new webpack.LoaderOptionsPlugin({

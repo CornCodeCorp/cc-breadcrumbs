@@ -9,14 +9,15 @@
         "moduleResolution": "node",
         "noUnusedLocals": true,
         "types": [
+            "hammerjs",
             "jasmine",
             "node"
         ],
         "lib": ["es2015", "dom"]
     },
     "files": [
-        "./lib/index.ts",
-        "./lib/src/breadcrumbs/breadcrumbs.component.ts"
+        "index.ts",
+        "./src/breadcrumbs.component.ts"
     ],
     "exclude": [
         "node_modules",
