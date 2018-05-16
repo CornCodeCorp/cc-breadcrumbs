@@ -1,6 +1,6 @@
 {
   "name": "@corn-code/breadcrumbs",
-  "version": "0.1.28",
+  "version": "0.1.33",
   "license": "MIT",
   "description": "Breadcrumbs library for Angular 4 applications",
   "scripts": {
