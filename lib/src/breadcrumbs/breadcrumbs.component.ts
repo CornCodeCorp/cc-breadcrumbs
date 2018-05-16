@@ -29,7 +29,7 @@ export interface IBreadcrumb {
 export class BreadcrumbsComponent implements OnInit {
 
     public breadcrumbs: IBreadcrumb[];
-    private paramKeyRegExp: RegExp = /:((\w+)Id)/g;
+    private paramKeyRegExp: RegExp = /:((\w+)(Id|Type))/g;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private router: Router) {
